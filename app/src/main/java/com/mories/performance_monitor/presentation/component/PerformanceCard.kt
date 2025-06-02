@@ -17,7 +17,7 @@ import com.mories.performance_monitor.ui.screen.viewmodel.HomeViewModel
 
 @Composable
 fun PerformanceCard(viewModel: HomeViewModel) {
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.padding(vertical = 16.dp)) {
         CpuSection(viewModel)
         Spacer(modifier = Modifier.height(8.dp))
 

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,6 +21,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.mories.performance_monitor.data.model.CpuInfo
 import com.mories.performance_monitor.di.AppModule
+import com.mories.performance_monitor.presentation.component.AppToolbar
 import com.mories.performance_monitor.presentation.component.PerformanceCard
 import com.mories.performance_monitor.presentation.navigation.Screen
 import com.mories.performance_monitor.ui.screen.viewmodel.HomeEvent
@@ -55,24 +57,34 @@ fun HomeScreen(
     val cpuInfo = state.cpuInfo
     val scrollState = rememberScrollState()
 
-    Column(
-        modifier = Modifier
-            .padding(16.dp)
-            .verticalScroll(scrollState)
-    ) {
-        PerformanceCard(viewModel = viewModel)
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Button(
-            onClick = {
-                cpuInfo?.let {
-                    onNavigateToDetail()
-                    onDetailClick(it)
-                }
-            }, enabled = cpuInfo != null
+    Scaffold(
+        topBar = {
+            AppToolbar(
+                title = "Performance Monitor", paddingBottom = 10,
+            )
+        },
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(horizontal = 16.dp)
+                .verticalScroll(scrollState)
         ) {
-            Text("View CPU Info")
+            PerformanceCard(viewModel = viewModel)
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Button(
+                onClick = {
+                    cpuInfo?.let {
+                        onNavigateToDetail()
+                        onDetailClick(it)
+                    }
+                }, enabled = cpuInfo != null
+            ) {
+                Text("View CPU Info")
+            }
         }
+
     }
 }
