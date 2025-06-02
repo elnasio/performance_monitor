@@ -54,7 +54,7 @@ app/
 
 1. Clone the repo:
 ```bash
-git clone https://github.com/yourname/performance_monitor.git
+git clone https://github.com/elnasio/performance_monitor.git
 ```
 
 2. Open in Android Studio.
