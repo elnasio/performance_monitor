@@ -9,4 +9,7 @@ data class CpuInfo(
     val coreCount: Int,
     val architecture: String,
     val deviceName: String,
+    val maxFrequencyMHz: Int,
+    val currentFrequencyMHz: Int,
+    val vendor: String,
 ) : Parcelable

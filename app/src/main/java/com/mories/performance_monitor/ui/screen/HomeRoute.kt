@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -51,8 +53,13 @@ fun HomeScreen(
 
     val state by viewModel.state.collectAsState()
     val cpuInfo = state.cpuInfo
+    val scrollState = rememberScrollState()
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+            .verticalScroll(scrollState)
+    ) {
         PerformanceCard(viewModel = viewModel)
 
         Spacer(modifier = Modifier.height(24.dp))

@@ -2,6 +2,7 @@ package com.mories.performance_monitor.ui.screen.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mories.performance_monitor.domain.usecase.GetBatteryHealthInfo
 import com.mories.performance_monitor.domain.usecase.GetCpuUsage
 import com.mories.performance_monitor.domain.usecase.GetInternetSpeed
 import com.mories.performance_monitor.domain.usecase.GetRamUsage
@@ -17,7 +18,8 @@ class HomeViewModel(
     private val getRamUsage: GetRamUsage,
     private val getInternetSpeed: GetInternetSpeed,
     private val startFpsMonitor: StartFpsMonitor,
-    private val stopFpsMonitor: StopFpsMonitor
+    private val stopFpsMonitor: StopFpsMonitor,
+    private val getBatteryHealthInfo: GetBatteryHealthInfo,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
@@ -30,6 +32,7 @@ class HomeViewModel(
     }
 
     private fun loadAll() {
+        startFpsMonitorInternal()
         viewModelScope.launch {
             launch {
                 getCpuUsage().collect { cpu ->
@@ -48,10 +51,16 @@ class HomeViewModel(
                     _state.update { it.copy(speedTestResult = speed) }
                 }
             }
+            launch {
+                val battery = runCatching { getBatteryHealthInfo() }.getOrNull()
+                battery?.let {
+                    _state.update { it.copy(batteryHealthInfo = battery) }
+                }
+            }
         }
     }
 
-    private fun startFpsMonitor() {
+    private fun startFpsMonitorInternal() {
         startFpsMonitor { fps ->
             _state.update { it.copy(fpsInfo = fps) }
         }

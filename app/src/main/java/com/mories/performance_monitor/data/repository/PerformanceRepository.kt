@@ -1,10 +1,12 @@
 package com.mories.performance_monitor.data.repository
 
 import android.content.Context
+import com.mories.performance_monitor.core.performance.BatteryHealthMonitor
 import com.mories.performance_monitor.core.performance.CpuMonitor
 import com.mories.performance_monitor.core.performance.FpsMonitor
 import com.mories.performance_monitor.core.performance.RamMonitor
 import com.mories.performance_monitor.core.performance.SystemInfoUtil
+import com.mories.performance_monitor.data.model.BatteryHealthInfo
 import com.mories.performance_monitor.data.model.CpuInfo
 import com.mories.performance_monitor.data.model.FpsInfo
 import com.mories.performance_monitor.data.model.RamInfo
@@ -21,6 +23,9 @@ class PerformanceRepository(private val context: Context) {
             coreCount = Runtime.getRuntime().availableProcessors(),
             architecture = SystemInfoUtil.getCpuArchitecture(),
             deviceName = SystemInfoUtil.getDeviceName(),
+            currentFrequencyMHz = SystemInfoUtil.getCpuCurrentFrequencyMHz(),
+            maxFrequencyMHz = SystemInfoUtil.getCpuMaxFrequencyMHz(),
+            vendor = SystemInfoUtil.getCpuVendor(),
         )
     }
 
@@ -32,6 +37,10 @@ class PerformanceRepository(private val context: Context) {
             availMemBytes = ram.availMem,
             usagePercent = ram.usagePercent
         )
+    }
+
+    fun getBatteryHealthInfo(): BatteryHealthInfo {
+        return BatteryHealthMonitor.getBatteryHealthInfo(context)
     }
 
     fun startFpsMonitor(onFpsUpdate: (FpsInfo) -> Unit) {

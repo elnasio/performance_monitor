@@ -1,5 +1,6 @@
 package com.mories.performance_monitor.ui.screen.viewmodel
 
+import com.mories.performance_monitor.data.model.BatteryHealthInfo
 import com.mories.performance_monitor.data.model.CpuInfo
 import com.mories.performance_monitor.data.model.FpsInfo
 import com.mories.performance_monitor.data.model.RamInfo
@@ -10,4 +11,5 @@ data class HomeState(
     val ramInfo: RamInfo? = null,
     val speedTestResult: SpeedTestResult? = null,
     val fpsInfo: FpsInfo = FpsInfo(0.0),
+    val batteryHealthInfo: BatteryHealthInfo? = null,
 )

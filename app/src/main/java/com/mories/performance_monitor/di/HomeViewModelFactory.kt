@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.mories.performance_monitor.data.repository.PerformanceRepository
+import com.mories.performance_monitor.domain.usecase.GetBatteryHealthInfo
 import com.mories.performance_monitor.domain.usecase.GetCpuUsage
 import com.mories.performance_monitor.domain.usecase.GetInternetSpeed
 import com.mories.performance_monitor.domain.usecase.GetRamUsage
@@ -21,7 +22,8 @@ class HomeViewModelFactory(private val context: Context) : ViewModelProvider.Fac
                 getRamUsage = GetRamUsage(repo),
                 getInternetSpeed = GetInternetSpeed(),
                 stopFpsMonitor = StopFpsMonitor(repo),
-                startFpsMonitor = StartFpsMonitor(repo)
+                startFpsMonitor = StartFpsMonitor(repo),
+                getBatteryHealthInfo = GetBatteryHealthInfo(repo)
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
